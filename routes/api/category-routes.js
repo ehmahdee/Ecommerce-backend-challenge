@@ -10,7 +10,9 @@ router.get('/', async (req, res) => {
     const catData = await Category.findAll({
       include: [{ model: Product }],
     })
-    res.status(200).json(catData);
+    .then((catData) => {
+      res.status(200).json(catData);
+    })
   }
   catch (err){
     res.status(500).json(err);
@@ -37,8 +39,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', (req, res) => {
   // create a new category
-  Category.create(req.body).then((category) => {
-    res.status(200).json(category);
+  Category.create(req.body).then((newCategory) => {
+    res.json(newCategory);
   })
   .catch((err) => {
       res.status(400).json(err);
@@ -48,8 +50,11 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(req.body, {
-  }).then((category) => {
-    res.status(200).json(category);
+    where: {
+      id: req.params.id,
+    }
+  }).then((updatedCategory) => {
+    res.status(200).json(updatedCategory);
   })
   .catch((err) => {
     console.log(err);
@@ -59,19 +64,15 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete a category by its `id` value
-  try {
-    const oneCatData = Category.destroy({
-      where: {
-        id: req.params.id,
-      },
-    })
-    if (!oneCatData) {
-      res.status(404).json({ message: 'No category found with this id.' });
-      return;
+  Category.destroy({
+    where: {
+      id: req.params.id,
     }
-  } catch (err) {
-    res.status(500).json(err);
-  } 
+  })
+  .then((deletedCategory) => {
+    res.status(200).json({message: 'Category deleted.'})
+  })
+  .catch((err) => res.json(err))
 });
 
 module.exports = router;

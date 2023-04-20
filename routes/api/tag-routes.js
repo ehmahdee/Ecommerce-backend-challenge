@@ -35,12 +35,10 @@ router.get('/:id', async (req, res) => {
 router.post('/', (req, res) => {
   // create a new tag
   Tag.create(req.body)
-  .then((tag) => {
-      res.status(200).json(tag);
+  .then((newTag) => {
+      res.status(200).json(newTag);
     })
-  .catch((err) => {
-      res.status(400).json(err);
-    });
+  .catch((err) => json(err));
 });
 
 router.put('/:id', (req, res) => {
@@ -50,24 +48,23 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     }
   })
+  .then((updatedTag) => {
+    res.json(updatedTag);
+  })
+  .catch((err) => json(err));
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  try {
-    const oneTagData = Tag.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-    if (!oneTagData) {
-      res.status(404).json({ message: 'No tag found with this id.' });
-      return;
+  Tag.destroy({
+    where: {
+      id: req.params.id,
     }
-    res.status(200).json(oneTagData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  })
+  .then((deletedTag) => {
+    res.status(200).json({message: 'Tag deleted successfully.'});
+  })
+  .catch((err) => res.json(err));
 });
 
 module.exports = router;
