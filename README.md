@@ -15,7 +15,7 @@
   
   ## Installation
   
-  This app requires nodejs, express, node inquirer 8.2.4., mysql, Insomnia, and dotenv.
+  This app requires node packages and Insomnia. The user will run npm i to install the packages.
 
   ## Usage
 
