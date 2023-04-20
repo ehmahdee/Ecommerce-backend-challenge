@@ -10,7 +10,6 @@
   * [License](#license)
   * [Screenshots](#screenshots)
   * [Contributing](#contributing)
-  * [Tests](#tests)
   * [Questions](#questions)
   
   ## Installation
@@ -33,10 +32,6 @@
   ## Contributions and Credits
 
   My discord study group: Michael Huang, Michael Rader, and Patricia Alberto.
-
-  ## Test Commands
-
-  Run this app using Insomnia, Postman, or Thunderclient.
 
   ## Questions
 
